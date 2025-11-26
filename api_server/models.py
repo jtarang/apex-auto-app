@@ -1,9 +1,9 @@
 # models.py - Models and Synchronous CRUD
 
-from sqlalchemy import Column, Integer, String, Boolean, create_engine, select
+from sqlalchemy import Column, Integer, String, Boolean, select
 from sqlalchemy.orm import declarative_base, Session
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional, List, Any, Sequence
+from typing import Optional, Sequence
 
 Base = declarative_base()
 

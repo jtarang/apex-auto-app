@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from typing import Generator
 import os
 
-from models import Base, Vehicle, VehicleCreate, VehicleUpdate, VehicleInDB, CRUDVehicle
+from api_server.models import Base
 
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 os.environ["DB_CERT_CA_PATH"] = "dummy.ca"
@@ -29,13 +29,13 @@ def override_get_db_session() -> Generator[Session, None, None]:
 
 
 # Assuming the user's application code is in 'main.py'
-import apex_auto_api as main_app
+from api_server import apex_auto_api as main_app
 
-# The original app setup uses:
+# The original api_server setup uses:
 # - database_manager (from handlers/database.py)
 # - vehicle_crud (from models.py, initialized in main.py)
 
-# Override the app's database dependency to use the test session factory
+# Override the api_server's database dependency to use the test session factory
 main_app.app.dependency_overrides[main_app.database_manager.get_db_session] = override_get_db_session
 
 

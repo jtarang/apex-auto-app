@@ -1,0 +1,51 @@
+services:
+  # Postgres 17 Database
+  postgres:
+    image: postgres:17
+    container_name: apex_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: teleport-db-admin
+      POSTGRES_PASSWORD: supersecurepassword
+      POSTGRES_DB: vehicleInventory
+    ports:
+      - "59999:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  # The Main FastAPI App
+  fastapi-app:
+    build:
+      context: .
+      dockerfile: api_server/Dockerfile
+    container_name: apex_fastapi
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URI=postgresql+psycopg2://teleport-db-admin:supersecurepassword@postgres:5432/vehicleInventory
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/api_server
+
+  # The MCP Server
+  mcp-server:
+    build:
+      context: .
+      dockerfile: mcp_server/Dockerfile
+    container_name: apex_mcp
+    depends_on:
+      - fastapi-app
+    ports:
+      - "8100:8100"
+    environment:
+      - API_URI=http://fastapi-app:8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/mcp_server
+
+volumes:
+  postgres_data:
