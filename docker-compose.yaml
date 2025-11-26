@@ -1,3 +1,10 @@
+x-pg-creds: &pg-creds
+  POSTGRES_USER: teleport-db-admin
+  POSTGRES_PASSWORD: supersecurepassword
+  POSTGRES_DB: vehicleInventory
+  POSTGRES_HOST: postgres:5432
+  DATABASE_URI: postgresql+psycopg2://teleport-db-admin:supersecurepassword@postgres:5432/vehicleInventory
+
 services:
   # Postgres 17 Database
   postgres:
@@ -5,9 +12,7 @@ services:
     container_name: apex_postgres
     restart: always
     environment:
-      POSTGRES_USER: teleport-db-admin
-      POSTGRES_PASSWORD: supersecurepassword
-      POSTGRES_DB: vehicleInventory
+      <<: *pg-creds
     ports:
       - "59999:5432"
     volumes:
@@ -24,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URI=postgresql+psycopg2://teleport-db-admin:supersecurepassword@postgres:5432/vehicleInventory
+      <<: *pg-creds
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -41,7 +46,7 @@ services:
     ports:
       - "8100:8100"
     environment:
-      - API_URI=http://fastapi-app:8000
+      API_URI: http://fastapi-app:8000
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

@@ -12,47 +12,39 @@ A FastAPI application wrapped with **FastMCP 2.0** for use as a Model Context Pr
 
 ---
 
-## 🧩 Setup Instructions
+## 🧩 Dev Setup Instructions
 
 ### 1. Clone the Repository
 
-```
+```shell
 git clone https://github.com/yourusername/apex-auto-app.git
 cd apex-auto-app
 ```
 
 ### 2. Create and Activate the Virtual Environment
 
-```
+```shell
 uv venv
 source .venv/bin/activate
 ```
 
 ### 3. Install Dependencies
 
-```
+```shell
 uv pip install -r pyproject.toml
 ```
 
 ---
 
-## ⚡ Running the MCP Server
+## ⚡ Running the API Server and MCP Server
 
-### Option 1: Run with Python
+### Docker Compose
 
-```
-python main.py
+```shell
+docker compose up
 ```
 
-You should see output similar to:
 
-```
-Server name:     apex-auto-mcp
-Transport:       Streamable-HTTP
-Server URL:      http://127.0.0.1:8000/mcp
-FastMCP version: 2.12.4
-MCP SDK version: 1.16.0
-```
 
 ---
 

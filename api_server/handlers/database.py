@@ -14,7 +14,7 @@ class DatabaseManager:
         and sets up the connection arguments.
         """
         self.database_url = environ.get("DATABASE_URI")
-
+        print(self.database_url)
         self.engine = None
         self.session_local = None
         self._sync_connect_args = None
