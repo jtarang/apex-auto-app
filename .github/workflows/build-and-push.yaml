@@ -74,21 +74,19 @@ jobs:
 
     steps:
       - name: Delete old image API Server versions
-        uses: snok/container-retention-policy@v2
+        uses: snok/container-retention-policy@v3.0.0
         with:
-          org-name: ${{ github.repository_owner }}
+          account: user
           image-names: api-server
-          cut-off: 0 days ago UTC
-          keep-at-least: 1
-          account-type: personal
+          cut-off: 20m
+          keep-n-most-recent: 2
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete old MCP Server image versions
-        uses: snok/container-retention-policy@v2
+        uses: snok/container-retention-policy@v3.0.0
         with:
-          org-name: ${{ github.repository_owner }}
+          account: user
           image-names: mcp-server
-          cut-off: 0 days ago UTC
-          keep-at-least: 5
-          account-type: personal
+          cut-off: 20m
+          keep-n-most-recent: 2
           token: ${{ secrets.GITHUB_TOKEN }}
