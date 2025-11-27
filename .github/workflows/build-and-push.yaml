@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '**'
+    paths: # Only run when files in these directories change
+      - 'api_server/**'
+      - 'mcp_server/**'
   workflow_dispatch:
 
 env:
@@ -43,7 +46,7 @@ jobs:
       - name: Build and push the API Server image
         uses: docker/build-push-action@v5
         with:
-          push: ${{ github.ref != 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           context: .
           file: api_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
@@ -56,7 +59,7 @@ jobs:
       - name: Build and push the MCP Server image
         uses: docker/build-push-action@v5
         with:
-          push: ${{ github.ref != 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           context: .
           file: mcp_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
@@ -69,7 +72,7 @@ jobs:
   delete-old-tags:
     runs-on: ubuntu-latest
     needs: build-and-push
-    if: github.ref != 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       packages: write
@@ -80,8 +83,8 @@ jobs:
         with:
           image-names: ${{ github.event.repository.name }}-api-server
           account: user
-          cut-off: 30m
-          keep-n-most-recent: 3
+          cut-off: 7 days
+          keep-n-most-recent: 5
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete old MCP Server versions
@@ -89,6 +92,6 @@ jobs:
         with:
           image-names: ${{ github.event.repository.name }}-mcp-server
           account: user
-          cut-off: 30m
-          keep-n-most-recent: 3
+          cut-off: 7 days
+          keep-n-most-recent: 5
           token: ${{ secrets.GITHUB_TOKEN }}
