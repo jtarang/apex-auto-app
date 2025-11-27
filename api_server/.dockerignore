@@ -1,0 +1,38 @@
+# Ignore version control system directories
+.git
+.hg
+.svn
+
+# Ignore common dependency/build directories
+/venv
+../.venv
+__pycache__
+*.pyc
+*.whl
+dist/
+build/
+*.egg-info/
+
+scripts/
+postgres_data/
+tests/
+
+# Ignore local development and configuration files
+.env
+.DS_Store
+.idea/
+.vscode/
+npm-debug.log
+yarn-error.log
+# Other editor/IDE specific files can go here
+
+# Ignore Docker related files that are not part of the final image
+Dockerfile
+docker-compose*.yaml
+.dockerignore
+
+# Ignore logs and temporary files
+tmp/
+logs/
+*.log
+*.tmp
