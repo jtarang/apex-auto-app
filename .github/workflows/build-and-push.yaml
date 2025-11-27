@@ -10,6 +10,7 @@ on:
 env:
   REGISTRY: ghcr.io
   REPOSITORY: ${{ github.repository }}
+  PLATFORMS: linux/amd64,linux/arm64
 
 jobs:
   build-and-push:
@@ -46,6 +47,7 @@ jobs:
           push: true
           context: .
           file: api_server/Dockerfile
+          platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}-api
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -57,6 +59,7 @@ jobs:
           push: true
           context: .
           file: mcp_server/Dockerfile
+          platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}-mcp-server
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
