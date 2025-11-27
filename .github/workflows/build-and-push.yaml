@@ -76,7 +76,7 @@ jobs:
       - name: Delete old image API Server versions
         uses: snok/container-retention-policy@v2
         with:
-          owner: ${{ github.repository_owner }}
+          org-name: ${{ github.repository_owner }}
           image-names: api-server
           cut-off: 0 days ago UTC
           keep-at-least: 1
@@ -86,7 +86,7 @@ jobs:
       - name: Delete old MCP Server image versions
         uses: snok/container-retention-policy@v2
         with:
-          owner: ${{ github.repository_owner }}
+          org-name: ${{ github.repository_owner }}
           image-names: mcp-server
           cut-off: 0 days ago UTC
           keep-at-least: 5
