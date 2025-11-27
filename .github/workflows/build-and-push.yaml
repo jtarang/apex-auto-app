@@ -48,7 +48,7 @@ jobs:
           file: api_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/api-server
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -61,7 +61,7 @@ jobs:
           file: mcp_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/mcp-server
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
