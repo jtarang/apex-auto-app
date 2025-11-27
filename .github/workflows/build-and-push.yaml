@@ -48,9 +48,8 @@ jobs:
           context: .
           file: api_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server:latest
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server-${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server:latest
+            #${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server-${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -62,9 +61,8 @@ jobs:
           context: .
           file: mcp_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server:latest
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server-${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server:latest
+            #${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server-${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
