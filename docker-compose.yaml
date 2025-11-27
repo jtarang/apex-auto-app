@@ -14,16 +14,16 @@ services:
     environment:
       <<: *pg-creds
     ports:
-      - "59999:5432"
+      - "5432:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
 
   # The Main FastAPI App
-  fastapi-app:
+  apex-auto-api:
     build:
       context: .
       dockerfile: api_server/Dockerfile
-    container_name: apex_fastapi
+    container_name: apex-auto-api-server
     depends_on:
       - postgres
     ports:
@@ -36,17 +36,17 @@ services:
       - .:/api_server
 
   # The MCP Server
-  mcp-server:
+  apex-auto-mcp:
     build:
       context: .
       dockerfile: mcp_server/Dockerfile
-    container_name: apex_mcp
+    container_name: apex-auto-mcp-server
     depends_on:
-      - fastapi-app
+      - apex-auto-api
     ports:
       - "8100:8100"
     environment:
-      API_URI: http://fastapi-app:8000
+      API_URI: http://apex-auto-api:8000
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
