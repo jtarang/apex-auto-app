@@ -47,7 +47,21 @@ docker compose up
 - MCP Server Address: `https://localhost:8100/sse`
 - API Server Address `https://localhost:8000/docs`
 
+### MCP Config
 
+#### LM Studio
+```shell
+{
+  "servers": {
+    "apex-sse-server": {
+      "transport": {
+        "type": "sse",
+        "url": "http://127.0.0.1:8100/sse"
+      }
+    }
+  }
+}
+```
 ---
 
 ## 📚 References
