@@ -41,7 +41,7 @@ jobs:
           tags: |
             type=sha,format=short
 
-      - name: Build and push the API image
+      - name: Build and push the API Server image
         uses: docker/build-push-action@v5
         with:
           push: true
@@ -49,7 +49,6 @@ jobs:
           file: api_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server:latest
-            #${{ env.REGISTRY }}/${{ env.REPOSITORY }}-api-server-${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -62,7 +61,29 @@ jobs:
           file: mcp_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server:latest
-            #${{ env.REGISTRY }}/${{ env.REPOSITORY }}-mcp-server-${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  delete-old-tags:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Needed for deletion
+
+    steps:
+      - name: Delete old image API Server versions
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: api-server
+          cut-off: 0 days ago
+          keep-at-least: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete old MCP Server image versions
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: mcp-server
+          cut-off: 0 days ago
+          keep-at-least: 5
+          token: ${{ secrets.GITHUB_TOKEN }}
