@@ -48,8 +48,7 @@ jobs:
           file: api_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/api-server-latest
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/api-server-sha-${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/api-server
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -62,8 +61,7 @@ jobs:
           file: mcp_server/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/mcp-server-latest
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/mcp-server-sha-${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/mcp-server
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -80,8 +78,7 @@ jobs:
       - name: Delete old API Server versions
         uses: snok/container-retention-policy@v3.0.0
         with:
-          image-names: ${{ github.event.repository.name }}
-          image-tags: api-server-sha-.*
+          image-names: ${{ github.event.repository.name }}-api-server
           account: user
           cut-off: 30m
           keep-n-most-recent: 3
@@ -90,8 +87,7 @@ jobs:
       - name: Delete old MCP Server versions
         uses: snok/container-retention-policy@v3.0.0
         with:
-          image-names: ${{ github.event.repository.name }}
-          image-tags: mcp-server-sha-.*
+          image-names: ${{ github.event.repository.name }}-mcp-server
           account: user
           cut-off: 30m
           keep-n-most-recent: 3
