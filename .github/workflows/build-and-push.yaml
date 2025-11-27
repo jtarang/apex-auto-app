@@ -7,6 +7,9 @@ on:
     paths: # Only run when files in these directories change
       - 'api_server/**'
       - 'mcp_server/**'
+  pull_request:
+    branches:
+      - 'main'
   workflow_dispatch:
 
 env:
