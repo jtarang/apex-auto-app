@@ -21,5 +21,5 @@ RUN uv sync --frozen --no-dev --no-install-project
 
 COPY ./mcp_server .
 
-# Run the FastMCP api_server
-CMD ["fastmcp", "run", "apex_auto_mcp.py", "--transport", "sse", "--host", "0.0.0.0", "--port", "8100"]
+# Run the FastMCP mcp_server
+CMD ["fastmcp", "run", "apex_auto_mcp.py", "--transport", "streamable-http", "--host", "0.0.0.0", "--port", "8100"]
