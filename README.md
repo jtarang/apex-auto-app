@@ -44,7 +44,7 @@ uv pip install -r pyproject.toml
 docker compose up
 ```
 
-- MCP Server Address: `https://localhost:8100/sse`
+- MCP Server Address: `https://localhost:8100/mcp`
 - API Server Address `https://localhost:8000/docs`
 
 ### MCP Config
